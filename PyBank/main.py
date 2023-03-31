@@ -19,19 +19,28 @@ with open(budgetdata_csv) as csvfile:
     for row in csvreader:
         date.append(row[0])
         split_date = row[0].split("-")
-        month.append(split_date[0])
-        year.append(split_date[1])
+        month_list = month.append(split_date[0])
+        year_list = year.append(split_date[1])
         profit_loss.append(row[1])
 
 #The total number of months included in the dataset
-    #Combine month and year in array, 
-    #For the data index in the array (loop through the array),
-    #If month or year is not equal to previous then add to list
-        #for date_index in 
+    #add to the total month list for each index in the date list if the index is not already in total month list
+    
+    total_month_count = 0
+    total_month_list = []
+    for index in date:
+        if index not in total_month_list:
+            total_month_list.append(index)
+            total_month_count = total_month_count + 1  
+    
+    print(total_month_count)
 
 #The net total amount of Profit/ Loss over the entire period
-#float each index in profit_loss then sum all of the floats
+    #float each index in profit_loss then sum all of the floats
     profit_loss_total = sum(float(index) for index in profit_loss)
     print(f"Profit/Loss Net Total Amount {profit_loss_total}")
+
+#The changes in Proft/ Loss over the entire period, and the average of those changes
+
 
 
