@@ -32,9 +32,6 @@ with open(electiondata_csv) as csvfile:
         if name not in candidate_names:
             candidate_names.append(name)
 
-
-    print(candidate_names)
-
 #The percentage of votes each candidate won
     #For each candidate, go through the candidate list and count how many times each person received a vote        
     for each_person in candidate_names:
@@ -55,17 +52,49 @@ with open(electiondata_csv) as csvfile:
     great_vote_index = candidate_count.index(max(candidate_count))
     winner = candidate_names[great_vote_index]
 
-#Print analysis to terminal
-    #Election Results
-    print("Election Results")
-    print("----------------------------")
-    #Total Votes
-    print(f"Total Votes: {total_votes_cast}")
-    print("----------------------------")
-    #Candidate: Candidate's Percentage of Votes (Candidate's Total Number of Votes)
+#Create variables with analysis results and insert variables in a list to be looped through to print/ write results
+    #for each candidate loop through the candidates and structure their information: then add to a list
+    info_list = []
     for each_candidate in candidate_names:
         index = candidate_names.index(each_candidate)
-        print(f"{candidate_names[index]}: {candidate_percentages[index]: .3f}% ({candidate_count[index]})") 
-    print("----------------------------")
-    #Winner
-    print(f"Winner: {winner}")
+        info = f"{candidate_names[index]}: {candidate_percentages[index]: .3f}% ({candidate_count[index]})"
+        info_list.append(info)
+
+    #assign variables to analysis results to be printed and written
+    Election_Results = "Election Results"
+    Dash = "----------------------------"
+    Total_Votes = f"Total Votes: {total_votes_cast}"
+    Candidate_Info = info_list
+    Winner = f"Winner: {winner}"
+
+    #create list of analysis for printer
+    analysis_list = [Election_Results, Dash, Total_Votes, Dash, Candidate_Info, Dash, Winner]
+
+ #Print analysis results to terminal   
+    for printer in analysis_list:
+        #if the printer comes upon the Candidate Info list then loop through the Candidate Info list and write to file
+        if printer == Candidate_Info:
+            for special_writer in Candidate_Info:
+                print(special_writer)
+        else: 
+            print(printer)
+
+
+#Print analysis to text file in analysis folder
+#create path to write the txt to 
+output_path = os.path.join("analysis", "main.txt")
+
+#open file and write to file
+with open(output_path, 'w') as file:
+    #loop through the analysis_list and write to file
+    for writer in analysis_list:
+        #if the writer comes upon the Candidate Info list then loop through the Candidate Info list and write to file
+        if writer == Candidate_Info:
+            for special_writer in Candidate_Info:
+                file.writelines(special_writer)
+                file.write("\n")
+        else: 
+            file.writelines(writer)
+            file.write("\n")
+    
+
